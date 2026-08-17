@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#09090b">
+  <title>Dhruv OS — Portfolio Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <a class="admin-brand" href="../"><span class="mark">D</span><span><b>Dhruv OS</b><small>Secure Portfolio Control</small></span></a>
+      <span class="eyebrow">PRIVATE ADMIN AREA</span>
+      <h1>Welcome back.</h1>
+      <p>Sign in to manage your portfolio content, projects and server-side assets.</p>
+      <form id="loginForm">
+        <label>Username<input name="username" autocomplete="username" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary-btn" type="submit">Sign in securely ↗</button>
+        <div class="form-error" id="loginError"></div>
+      </form>
+      <small class="security-note">Protected by a Netlify serverless function. Your password is never stored in this page.</small>
+    </div>
+  </div>
+
+  <div class="admin-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="admin-brand" href="../">
+        <span class="mark">D</span>
+        <span><b>Dhruv OS</b><small>Portfolio Control</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav>
+        <button class="side-link active" data-view="dashboard">◈ <span>Overview</span></button>
+        <button class="side-link" data-view="projects">▣ <span>Projects</span><em>05</em></button>
+        <button class="side-link" data-view="content">✦ <span>Content</span></button>
+        <button class="side-link" data-view="files">⌁ <span>File system</span></button>
+        <button class="side-link" data-view="motion">◌ <span>Motion lab</span></button>
+        <button class="side-link" data-view="settings">⚙ <span>Settings</span></button>
+      </nav>
+      <div class="side-bottom">
+        <div class="status-card"><i></i><div><b>SERVER MODE</b><small>Netlify backend active</small></div></div>
+        <a href="../" class="back-site">↗ View live portfolio</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div>
+          <span class="crumb">CONTROL CENTER / <b id="viewName">OVERVIEW</b></span>
+          <h1 id="pageTitle">Portfolio overview</h1>
+        </div>
+        <div class="top-actions">
+          <span class="saved" id="saveState">● Saved locally</span>
+          <button class="ghost-btn" id="exportBtn">Export data</button>
+          <button class="primary-btn" id="previewBtn">Preview ↗</button>
+        </div>
+      </header>
+
+      <section class="view active" id="dashboard">
+        <div class="hero-panel">
+          <div><span class="eyebrow">SYSTEM STATUS / 2026</span><h2>Make the portfolio feel<br><span>alive.</span></h2><p>One control surface for projects, content, assets and motion. Everything here is designed for a premium static-site workflow.</p></div>
+          <div class="system-orb"><span>DG</span><i></i><b>ONLINE</b></div>
+        </div>
+        <div class="stats">
+          <article><small>PROJECTS</small><strong id="statProjects">05</strong><span>Published builds</span></article>
+          <article><small>ASSETS</small><strong id="statFiles">04</strong><span>Core local assets</span></article>
+          <article><small>SECTIONS</small><strong>06</strong><span>Portfolio surfaces</span></article>
+          <article><small>MOTION</small><strong id="statMotion">ON</strong><span>Enhanced interaction</span></article>
+        </div>
+        <div class="grid-two">
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>Workspace pulse</h3></div><button class="mini-btn" data-view-jump="content">Manage</button></div>
+            <div id="activityList" class="activity"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><span class="eyebrow">QUICK ACTIONS</span><h3>Build faster</h3></div></div>
+            <div class="quick-grid">
+              <button data-view-jump="projects"><b>＋</b><span>Add project</span></button>
+              <button data-view-jump="files"><b>↑</b><span>Manage files</span></button>
+              <button data-view-jump="motion"><b>✦</b><span>Tune motion</span></button>
+              <button id="resetBtn"><b>↺</b><span>Reset workspace</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="projects">
+        <div class="section-intro"><span class="eyebrow">PROJECT REGISTRY</span><h2>Five builds. One archive.</h2><p>Edit titles, labels, links and visibility without touching the main layout.</p></div>
+        <div class="project-admin-list" id="projectAdminList"></div>
+      </section>
+
+      <section class="view" id="content">
+        <div class="section-intro"><span class="eyebrow">CONTENT SYSTEM</span><h2>Shape the story.</h2><p>These values are stored on the server and can also be exported as a backup manifest.</p></div>
+        <div class="editor-grid">
+          <form class="panel editor-form" id="contentForm">
+            <label>Display name<input name="name"></label>
+            <label>Eyebrow<input name="eyebrow"></label>
+            <label>Hero headline<input name="headline"></label>
+            <label>Hero description<textarea name="description" rows="4"></textarea></label>
+            <label>Availability<input name="availability"></label>
+            <button class="primary-btn" type="submit">Save content</button>
+          </form>
+          <div class="panel preview-copy"><span class="eyebrow">LIVE COPY</span><h3 id="copyPreviewTitle">Engineering ideas into real experiences.</h3><p id="copyPreviewText"></p><div class="copy-note">Static-site note: this editor stores a content manifest in this browser. It does not rewrite deployed HTML.</div></div>
+        </div>
+      </section>
+
+      <section class="view" id="files">
+        <div class="section-intro"><span class="eyebrow">ASSET VAULT</span><h2>File system, without the mess.</h2><p>Keep a local, searchable asset vault for portfolio work. Uploads are stored server-side in Netlify Blobs and can be managed from this panel.</p></div>
+        <div class="file-toolbar panel">
+          <input id="fileSearch" placeholder="Search files…">
+          <label class="upload-btn">＋ Add files<input id="fileInput" type="file" multiple hidden></label>
+          <button class="ghost-btn" id="clearFiles">Clear local vault</button>
+        </div>
+        <div class="file-grid" id="fileGrid"></div>
+        <div class="panel file-note"><b>How it works</b><span>Core site files remain in the project folder. Uploaded assets are stored server-side in Netlify Blobs; this panel is the management surface for them.</span></div>
+      </section>
+
+      <section class="view" id="motion">
+        <div class="section-intro"><span class="eyebrow">MOTION LAB</span><h2>Tune the atmosphere.</h2><p>Control the interaction layer used by the public portfolio.</p></div>
+        <div class="motion-grid">
+          <div class="panel controls">
+            <label class="range-row"><span>Motion intensity <b id="motionValue">78%</b></span><input id="motionRange" type="range" min="0" max="100" value="78"></label>
+            <label class="switch-row"><span>Cursor glow <small>Desktop pointer light</small></span><input id="glowSwitch" type="checkbox" checked></label>
+            <label class="switch-row"><span>Project tilt <small>Pointer-reactive cards</small></span><input id="tiltSwitch" type="checkbox" checked></label>
+            <label class="switch-row"><span>Scroll reveal <small>Blur-to-clear entrance</small></span><input id="revealSwitch" type="checkbox" checked></label>
+          </div>
+          <div class="panel motion-stage"><div class="stage-card"><span>DH</span><b>INTERACTION</b><i></i><small>MOVE YOUR POINTER</small></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="settings">
+        <div class="section-intro"><span class="eyebrow">WORKSPACE SETTINGS</span><h2>Keep control.</h2><p>Security settings and portable backups for your server-side portfolio workspace.</p></div>
+        <div class="settings-grid">
+          <div class="panel">
+            <span class="eyebrow">PASSWORD</span><h3>Change admin password</h3>
+            <form id="passwordForm" class="editor-form">
+              <label>Current password<input name="currentPassword" type="password" autocomplete="current-password" required></label>
+              <label>New password<input name="newPassword" type="password" minlength="10" autocomplete="new-password" required></label>
+              <label>Confirm new password<input name="confirmPassword" type="password" minlength="10" autocomplete="new-password" required></label>
+              <button class="primary-btn" type="submit">Update password</button>
+              <div class="form-error" id="passwordMessage"></div>
+            </form>
+          </div>
+          <div class="panel"><span class="eyebrow">SECURITY</span><h3>Server-side authentication</h3><p>The admin password is never stored in HTML, CSS or JavaScript. After the first password change, only a scrypt hash is stored in the private Netlify Blobs data store. Sessions use an HttpOnly, Secure, signed cookie.</p><p class="small-muted">For a forgotten password, use the private reset procedure described in <code>BACKEND_SETUP.md</code>.</p></div>
+          <div class="panel"><span class="eyebrow">DATA</span><h3>Portable backup</h3><p>Export your project/content registry as JSON before moving deployments or making major changes.</p><button class="primary-btn" id="exportBtn2">Export workspace</button></div>
+          <div class="panel"><span class="eyebrow">SESSION</span><h3>Sign out</h3><p>Ends the current authenticated browser session.</p><button class="ghost-btn" id="logoutBtn">Sign out securely</button></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>
